@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Movie;
-use Illuminate\Http\Request;
+use App\Models\Test;
+use App\Http\Requests\StoreTestRequest;
+use App\Http\Requests\UpdateTestRequest;
 
-class MovieController extends Controller
+class TestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,18 +24,17 @@ class MovieController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        $list = Movie::orderBy('id', 'DESC');
-        return view('admincp.movie.form', compact('list'));
+    {
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreTestRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTestRequest $request)
     {
         //
     }
@@ -42,10 +42,10 @@ class MovieController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Test  $test
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Test $test)
     {
         //
     }
@@ -53,10 +53,10 @@ class MovieController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Test  $test
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Test $test)
     {
         //
     }
@@ -64,11 +64,11 @@ class MovieController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\UpdateTestRequest  $request
+     * @param  \App\Models\Test  $test
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTestRequest $request, Test $test)
     {
         //
     }
@@ -76,10 +76,10 @@ class MovieController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Test  $test
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Test $test)
     {
         //
     }

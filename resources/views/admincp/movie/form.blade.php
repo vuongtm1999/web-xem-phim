@@ -5,43 +5,42 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">Manage category</div>
+                    <div class="card-header">Manage Country</div>
                     <div class="card-body">
 
-                        @if (!isset($category))
-                            {!! Form::open(['route' => 'category.store', 'method' => 'POST']) !!}
+                        @if (!isset($country))
+                            {!! Form::open(['route' => 'country.store', 'method' => 'POST']) !!}
                         @else
-                            {!! Form::open(['route' => ['category.update', $category->id], 'method' => 'PUT']) !!}
+                            {!! Form::open(['route' => ['country.update', $country->id], 'method' => 'PUT']) !!}
                         @endif
 
 
                         <div class="form-group mb-3">
                             {!! Form::label('title', 'Title', []) !!}
-                            {!! Form::text('title', isset($category) ? $category->title : '', [
+                            {!! Form::text('title', isset($country) ? $country->title : '', [
                                 'class' => 'form-control',
-                                'placehoder' => 'Typing title of category...',
+                                'placehoder' => 'Typing title of country...',
                                 'id' => 'slug', 'onkeyup'=>'ChangeToSlug()',
                             ]) !!}
                         </div>
                         <div class="form-group mb-3">
                             {!! Form::label('slug', 'slug', []) !!}
-                            {!! Form::text('slug', isset($category) ? $category->slug : '', [
+                            {!! Form::text('slug', isset($country) ? $country->slug : '', [
                                 'style' => 'resize:none',
                                 'class' => 'form-control',
-                                'placehoder' => 'Typing slug of category...',
+                                'placehoder' => 'Typing slug of country...',
                                 'id' => 'convert_slug',
                             ]) !!}
                         </div>
                         <div class="form-group mb-3">
                             {!! Form::label('description', 'Description', []) !!}
-                            {!! Form::textarea('description', isset($category) ? $category->description : '', [
+                            {!! Form::textarea('description', isset($country) ? $country->description : '', [
                                 'style' => 'resize:none',
                                 'class' => 'form-control',
-                                'placehoder' => 'Typing description of category...',
+                                'placehoder' => 'Typing description of country...',
                                 'id' => 'descCate',
                             ]) !!}
                         </div>
-
 
                         <div class="form-group mb-3">
                             {!! Form::label('status', 'Status', []) !!}
@@ -51,18 +50,18 @@
                                     '1' => 'Vissible',
                                     '0' => 'Hidden',
                                 ],
-                                isset($category) ? $category->status : '',
+                                isset($country) ? $country->status : '',
                                 [
                                     'class' => 'form-control',
                                 ],
                             ) !!}
                         </div>
 
-                        @if (!isset($category))
-                            {!! Form::submit('Add category', ['class' => 'btn btn-success']) !!}
+                        @if (!isset($country))
+                            {!! Form::submit('Add country', ['class' => 'btn btn-success']) !!}
                         @endif
 
-                        @if (isset($category))
+                        @if (isset($country))
                             {!! Form::submit('Update', ['class' => 'btn btn-success']) !!}
                         @endif
 
@@ -102,15 +101,15 @@
                                     <div class="d-flex">
                                         {!! Form::open([
                                             'method' => 'DELETE',
-                                            'route' => ['category.destroy', $value->id],
+                                            'route' => ['country.destroy', $value->id],
                                             'onsubmit' => 'return confirm("Confirm delete?")',
                                         ]) !!}
-
+    
                                         {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-
+    
                                         {!! Form::close() !!}
-
-                                        <a class="btn btn-warning ms-2" href="{{ route('category.edit', $value->id) }}">
+    
+                                        <a class="btn btn-warning ms-2" href="{{ route('country.edit', $value->id) }}">
                                             Edit
                                         </a>
                                     </div>

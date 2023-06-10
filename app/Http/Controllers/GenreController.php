@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 class GenreController extends Controller
@@ -23,7 +24,9 @@ class GenreController extends Controller
      */
     public function create()
     {
-        //
+        $list =  Genre::all();
+
+        return view('admincp.genre.form', compact('list'));
     }
 
     /**
@@ -34,7 +37,16 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request-> all();
+        $genre = new Genre();
+        $genre->title = $data['title'];
+        $genre->slug = $data['slug'];
+        $genre->description = $data['description'];
+        $genre->status = $data['status'];
+
+        $genre->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -56,7 +68,10 @@ class GenreController extends Controller
      */
     public function edit($id)
     {
-        //
+        $genre =  Genre::find($id);
+        $list =  Genre::all();
+
+        return view('admincp.genre.form', compact('genre', 'list'));
     }
 
     /**
@@ -68,7 +83,16 @@ class GenreController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request-> all();
+        $genre = Genre::find($id);
+        $genre->title = $data['title'];
+        $genre->slug = $data['slug'];
+        $genre->description = $data['description'];
+        $genre->status = $data['status'];
+
+        $genre->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -77,8 +101,9 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        Genre::find($id)->delete();
+        return redirect()->back();
     }
 }
