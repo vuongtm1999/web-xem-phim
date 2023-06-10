@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Country;
+use App\Models\Genre;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 
@@ -23,9 +26,13 @@ class MovieController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        $list = Movie::orderBy('id', 'DESC');
-        return view('admincp.movie.form', compact('list'));
+    {
+        $list = Movie::with('category', 'genre', 'country')->orderBy('id', 'DESC')->get();
+        $category = Category::pluck('title', 'id');
+        $country = Country::pluck('title', 'id');
+        $genre = Genre::pluck('title', 'id');
+
+        return view('admincp.movie.form', compact('list', 'category', 'country', 'genre'));
     }
 
     /**
@@ -36,7 +43,31 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $movie = new Movie();
+        $movie->title = $data['title'];
+        $movie->slug = $data['slug'];
+        $movie->description = $data['description'];
+        $movie->category_id = $data['category_id'];
+        $movie->genre_id = $data['genre_id'];
+        $movie->country_id = $data['country_id'];
+
+        $get_img = $request->file('image');
+
+        // Them hinh anh
+        if ($get_img) {
+            $get_name_image = $get_img->getClientOriginalName(); // hinhanh.jpg
+            $name_image = current(explode('.', $get_name_image)); // hinhanh
+            $new_image = $name_image . rand(0, 9999) . '.' . $get_img->getClientOriginalExtension(); // hinhanh1234.jpg
+
+            $get_img->move('uploads/movie/', $new_image);
+
+            $movie->image = $new_image;
+        }
+
+        $movie->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -58,7 +89,13 @@ class MovieController extends Controller
      */
     public function edit($id)
     {
-        //
+        $list = Movie::with('category', 'genre', 'country')->orderBy('id', 'DESC')->get();
+        $category = Category::pluck('title', 'id');
+        $country = Country::pluck('title', 'id');
+        $genre = Genre::pluck('title', 'id');
+        $movie = Movie::find($id);
+
+        return view('admincp.movie.form', compact('list', 'movie', 'category', 'country', 'genre'));
     }
 
     /**
@@ -70,7 +107,35 @@ class MovieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        $movie = Movie::find($id);
+        $movie->title = $data['title'];
+        $movie->slug = $data['slug'];
+        $movie->description = $data['description'];
+        $movie->category_id = $data['category_id'];
+        $movie->genre_id = $data['genre_id'];
+        $movie->country_id = $data['country_id'];
+
+        $get_img = $request->file('image');
+
+        // Them hinh anh
+        if ($get_img) {
+            if (!empty($movie->image)) {
+                unlink('uploads/movie/' . $movie->image);
+            }
+
+            $get_name_image = $get_img->getClientOriginalName(); // hinhanh.jpg
+            $name_image = current(explode('.', $get_name_image)); // hinhanh
+            $new_image = $name_image . rand(0, 9999) . '.' . $get_img->getClientOriginalExtension(); // hinhanh1234.jpg
+
+            $get_img->move('uploads/movie/', $new_image);
+
+            $movie->image = $new_image;
+        }
+
+        $movie->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -81,6 +146,13 @@ class MovieController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $movie = Movie::find($id);
+        if (!empty($movie->image)) {
+            unlink('uploads/movie/' . $movie->image);
+        }
+
+        $movie->delete();
+
+        return redirect()->back();
     }
 }

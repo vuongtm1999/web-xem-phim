@@ -44,37 +44,40 @@
             <div class="clearfix"></div>
         </div>
         <main id="main-contents" class="col-xs-12 col-sm-12 col-md-8">
-            @foreach ($category as $item)
-                <section id="halim-advanced-widget-2">
+            <section id="halim-advanced-widget-2">
+                @foreach ($category_home as $category_item)
                     <div class="section-heading">
-                        <a href="danhmuc.php" title="{{ $item->title }}">
-                            <span class="h-text">{{ $item->title }}</span>
+                        <a href="danhmuc.php" title="{{ $category_item->title }}">
+                            <span class="h-text">{{ $category_item->title }}</span>
                         </a>
                     </div>
-                    {{-- <div id="halim-advanced-widget-2-ajax-box" class="halim_box">
-                        <article class="col-md-3 col-sm-3 col-xs-6 thumb grid-item post-37606">
-                            <div class="halim-item">
-                                <a class="halim-thumb" href="chitiet.php">
-                                    <figure><img class="lazy img-responsive"
-                                            src="https://lumiere-a.akamaihd.net/v1/images/p_blackwidow_disneyplus_21043-1_63f71aa0.jpeg"
-                                            alt="BẠN CÙNG PHÒNG CỦA TÔI LÀ GUMIHO" title="BẠN CÙNG PHÒNG CỦA TÔI LÀ GUMIHO">
-                                    </figure>
-                                    <span class="status">TẬP 15</span><span class="episode"><i class="fa fa-play"
-                                            aria-hidden="true"></i>Vietsub</span>
-                                    <div class="icon_overlay"></div>
-                                    <div class="halim-post-title-box">
-                                        <div class="halim-post-title ">
-                                            <p class="entry-title">BẠN CÙNG PHÒNG CỦA TÔI LÀ GUMIHO</p>
-                                            <p class="original_title">My Roommate Is a Gumiho</p>
+                    <div id="halim-advanced-widget-2-ajax-box" class="halim_box">
+                        @foreach ($category_item->movie->take(8) as $item)
+                            <article class="col-md-3 col-sm-3 col-xs-6 thumb grid-item post-37606">
+                                <div class="halim-item">
+                                    <a class="halim-thumb" href="chitiet.php">
+                                        <figure><img class="lazy img-responsive"
+                                                src="{{ asset('uploads/movie/' . $item->image) }}"
+                                                alt="{{ $item->title }}"
+                                                title="{{ $item->title }}">
+                                        </figure>
+                                        <span class="status">TẬP 15</span><span class="episode"><i class="fa fa-play"
+                                                aria-hidden="true"></i>Vietsub</span>
+                                        <div class="icon_overlay"></div>
+                                        <div class="halim-post-title-box">
+                                            <div class="halim-post-title ">
+                                                <p class="entry-title">{{ $item->title }}</p>
+                                                <p class="original_title">My Roommate Is a Gumiho</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </article>
-                    </div> --}}
-                </section>
-                <div class="clearfix"></div>
-            @endforeach
+                                    </a>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                    <div class="clearfix"></div>
+                @endforeach
+            </section>
         </main>
         <aside id="sidebar" class="col-xs-12 col-sm-12 col-md-4">
             <div id="halim_tab_popular_videos-widget-7" class="widget halim_tab_popular_videos-widget">

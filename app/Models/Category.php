@@ -9,4 +9,9 @@ class Category extends Model
 {   
     public $timestamps = false;
     use HasFactory;
+    public function movie()
+    {   
+        // ->orderBy('id', 'DESC') la lay film moi nhat
+        return $this->hasMany(Movie::class)->orderBy('id', 'DESC');
+    }
 }

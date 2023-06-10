@@ -84,7 +84,7 @@
                             <th scope="col">Manage</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="order_position">
                         @foreach ($list as $key => $value)
                             <tr>
                                 <th scope="row">{{ $key + 1 }}</th>

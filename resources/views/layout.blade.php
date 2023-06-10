@@ -82,6 +82,9 @@
                     <div id="bookmark-list" class="hidden bookmark-list-on-pc">
                         <ul style="margin: 0;"></ul>
                     </div>
+                    <span style="padding: 14px" class="bg-success d-inline-block">
+                        <a href="{{ route('genre.create') }}">Admin</a>
+                    </span>
                 </div>
             </div>
         </div>
