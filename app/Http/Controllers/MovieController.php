@@ -17,7 +17,9 @@ class MovieController extends Controller
      */
     public function index()
     {
-        //
+        $list = Movie::with('category', 'genre', 'country')->orderBy('id', 'DESC')->get();
+
+        return view('admincp.movie.index', compact('list'));
     }
 
     /**
@@ -27,12 +29,11 @@ class MovieController extends Controller
      */
     public function create()
     {
-        $list = Movie::with('category', 'genre', 'country')->orderBy('id', 'DESC')->get();
         $category = Category::pluck('title', 'id');
         $country = Country::pluck('title', 'id');
         $genre = Genre::pluck('title', 'id');
 
-        return view('admincp.movie.form', compact('list', 'category', 'country', 'genre'));
+        return view('admincp.movie.form', compact('category', 'country', 'genre'));
     }
 
     /**
@@ -47,10 +48,13 @@ class MovieController extends Controller
         $movie = new Movie();
         $movie->title = $data['title'];
         $movie->slug = $data['slug'];
+        $movie->eng_title = $data['eng_title'];
         $movie->description = $data['description'];
+        $movie->status = $data['status'];
         $movie->category_id = $data['category_id'];
-        $movie->genre_id = $data['genre_id'];
         $movie->country_id = $data['country_id'];
+        $movie->genre_id = $data['genre_id'];
+        $movie->phim_hot = $data['phim_hot'];
 
         $get_img = $request->file('image');
 
@@ -89,13 +93,12 @@ class MovieController extends Controller
      */
     public function edit($id)
     {
-        $list = Movie::with('category', 'genre', 'country')->orderBy('id', 'DESC')->get();
         $category = Category::pluck('title', 'id');
         $country = Country::pluck('title', 'id');
         $genre = Genre::pluck('title', 'id');
         $movie = Movie::find($id);
 
-        return view('admincp.movie.form', compact('list', 'movie', 'category', 'country', 'genre'));
+        return view('admincp.movie.form', compact('movie', 'category', 'country', 'genre'));
     }
 
     /**
@@ -115,6 +118,7 @@ class MovieController extends Controller
         $movie->category_id = $data['category_id'];
         $movie->genre_id = $data['genre_id'];
         $movie->country_id = $data['country_id'];
+        $movie->phim_hot = $data['phim_hot'];
 
         $get_img = $request->file('image');
 

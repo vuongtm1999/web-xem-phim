@@ -4,8 +4,9 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <a href="{{ route('movie.index') }}" class="btn btn-primary d-inline-block fw-bold mb-3">List film</a>
                 <div class="card">
-                    <div class="card-header">Manage Movie</div>
+                    <div class="card-header me-3">Manage Movie</div>
                     <div class="card-body">
 
                         @if (!isset($movie))
@@ -31,6 +32,14 @@
                                 'class' => 'form-control',
                                 'placehoder' => 'Typing slug of movie...',
                                 'id' => 'convert_slug',
+                            ]) !!}
+                        </div>
+                        <div class="form-group mb-3">
+                            {!! Form::label('eng_title', 'English title:', []) !!}
+                            {!! Form::text('eng_title', isset($movie) ? $movie->eng_title : '', [
+                                'class' => 'form-control',
+                                'placehoder' => 'Typing eng_title of movie...',
+                                'id' => 'eng_title',
                             ]) !!}
                         </div>
                         <div class="form-group mb-3">
@@ -76,6 +85,20 @@
                             ]) !!}
                         </div>
                         <div class="form-group mb-3">
+                            {!! Form::label('phim_hot', 'Hot: ', []) !!}
+                            {!! Form::select(
+                                'phim_hot',
+                                [
+                                    '1' => 'Có',
+                                    '0' => 'Không',
+                                ],
+                                isset($movie) ? $movie->phim_hot : '',
+                                [
+                                    'class' => 'form-control',
+                                ],
+                            ) !!}
+                        </div>
+                        <div class="form-group mb-3">
                             {!! Form::label('image', 'Image: ', []) !!}
                             {!! Form::file('image', ['class' => 'form-control']) !!}
 
@@ -99,70 +122,6 @@
                         {!! Form::close() !!}
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-10 mt-5">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Slug</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Genre</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">Manage</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($list as $key => $value)
-                            <tr>
-                                <th scope="row">{{ $key + 1 }}</th>
-                                <td>{{ $value->title }}</td>
-                                <td><img class="img-fluid w-100" src="{{ asset('uploads/movie/' . $value->image) }}"
-                                        alt="{{ $value->image }}"></td>
-                                <td>{{ $value->slug }}</td>
-                                <td style="width: 25%"><span class="line-2">{{ $value->description }}</span></td>
-                                <td>
-                                    @if ($value['status'])
-                                        Hiện thị
-                                    @else
-                                        Ẩn
-                                    @endif
-                                </td>
-                                <td>
-                                    {{ $value->category->title }}
-                                </td>
-                                <td>
-                                    {{ $value->genre->title }}
-                                </td>
-                                <td>
-                                    {{ $value->country->title }}
-                                </td>
-                                <td>
-                                    <div class="d-flex">
-                                        {!! Form::open([
-                                            'method' => 'DELETE',
-                                            'route' => ['movie.destroy', $value->id],
-                                            'onsubmit' => 'return confirm("Confirm delete?")',
-                                        ]) !!}
-
-                                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-
-                                        {!! Form::close() !!}
-
-                                        <a class="btn btn-warning ms-2" href="{{ route('movie.edit', $value->id) }}">
-                                            Edit
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

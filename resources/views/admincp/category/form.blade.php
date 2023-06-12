@@ -86,8 +86,8 @@
                     </thead>
                     <tbody class="order_position">
                         @foreach ($list as $key => $value)
-                            <tr>
-                                <th scope="row">{{ $key + 1 }}</th>
+                            <tr id="{{ $value->id }}">
+                                <th scope="row">{{ $value->position }}</th>
                                 <td>{{ $value->title }}</td>
                                 <td>{{ $value->slug }}</td>
                                 <td>{{ $value->description }}</td>
